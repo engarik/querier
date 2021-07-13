@@ -1,6 +1,8 @@
 package com.github.kuzznya.querier.builder.create;
 
 import com.github.kuzznya.querier.builder.create.columns.Column;
+import com.github.kuzznya.querier.builder.create.columns.CustomColumn;
+import com.github.kuzznya.querier.builder.create.columns.CustomParameterColumn;
 import com.github.kuzznya.querier.builder.create.columns.ParameterColumn;
 import com.github.kuzznya.querier.builder.create.model.DataType;
 
@@ -35,8 +37,8 @@ public class AfterTableBuilder extends CreateBuilder {
         return new AfterTableBuilder(this);
     }
 
-    public AfterTableBuilder DECIMAL(String name, int M, int D) {
-        super.addColumn(new ParameterColumn(name, DataType.DECIMAL, M, D));
+    public AfterTableBuilder DECIMAL(String name, int size, int fractionalPartSize) {
+        super.addColumn(new ParameterColumn(name, DataType.DECIMAL, size, fractionalPartSize));
         return new AfterTableBuilder(this);
     }
 
@@ -44,6 +46,16 @@ public class AfterTableBuilder extends CreateBuilder {
         super.addColumn(new Column(name, DataType.DATE));
         return new AfterTableBuilder(this);
     }
+
+    public AfterTableBuilder type(String typeName, String name) {
+        super.addColumn(new CustomColumn(typeName, name, DataType.CUSTOM));
+        return new AfterTableBuilder(this);
+    }
+    public AfterTableBuilder type(String typeName, String name, Integer ... params) {
+        super.addColumn(new CustomParameterColumn(typeName, name, DataType.CUSTOM, params));
+        return new AfterTableBuilder(this);
+    }
+
 
     public String build() {
         return super.build();

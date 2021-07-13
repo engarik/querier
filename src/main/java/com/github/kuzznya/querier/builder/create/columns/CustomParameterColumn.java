@@ -6,12 +6,12 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class ParameterColumn extends Column {
+public class CustomParameterColumn extends CustomColumn {
 
     private final List<Integer> params;
 
-    public ParameterColumn(String name, DataType type, Integer ... params) {
-        super(name, type);
+    public CustomParameterColumn(String typeName, String name, DataType type, Integer ... params) {
+        super(typeName, name, type);
         this.params = Arrays.asList(params);
     }
 
@@ -20,4 +20,5 @@ public class ParameterColumn extends Column {
         return super.toString() +
                 "(" + params.stream().map(String::valueOf).collect(Collectors.joining(", ")) + ")";
     }
+
 }

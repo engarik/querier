@@ -25,5 +25,6 @@ public enum DataType {
     TIME,
     YEAR,
     ENUM,
-    SET
+    SET,
+    CUSTOM
 }

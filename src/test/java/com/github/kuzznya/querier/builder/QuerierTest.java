@@ -1,5 +1,6 @@
 package com.github.kuzznya.querier.builder;
 
+import com.github.kuzznya.querier.builder.create.model.DataType;
 import com.github.kuzznya.querier.builder.syntax.impl.DefaultSyntaxProvider;
 import com.github.kuzznya.querier.builder.syntax.SyntaxProvider;
 import org.junit.jupiter.api.Test;
@@ -155,5 +156,21 @@ class QuerierTest {
                 "last_name VARCHAR(30), " +
                 "first_name VARCHAR(30), " +
                 "birthday DATE)", query);
+    }
+
+    @Test
+    public void createCustomTable() {
+        String query = new Querier()
+                .create()
+                .table("CustomTable")
+                .INT("id")
+                .type("jsonb", "myName1")
+                .type("MyCustomType", "myName2", 1, 2, 3)
+                .build();
+
+        assertEquals("CREATE TABLE CustomTable " +
+                "(id INT, " +
+                "myName1 jsonb, " +
+                "myName2 MyCustomType(1, 2, 3))", query);
     }
 }
